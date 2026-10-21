@@ -1,13 +1,8 @@
 ---
 on:
   workflow_dispatch:
+  # No path filters: these are required checks, and a filtered-out PR would never get them.
   pull_request:
-    paths:
-      - '**/*.swift'
-      - .swift-format
-      - scripts/**
-      - Makefile
-      - .github/workflows/lint.yaml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
