@@ -1,0 +1,7 @@
+BEGIN:VCARD
+VERSION:3.0
+N:NoteTest;Mothball;;;
+FN:Mothball NoteTest
+TEL;type=CELL;type=VOICE;type=pref:+1 555 0100
+NOTE:This note exists to test whether an app without the notes entitlement can update or delete this contact.
+END:VCARD

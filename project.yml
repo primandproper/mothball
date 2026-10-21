@@ -1,0 +1,77 @@
+name: Mothball
+
+options:
+  bundleIdPrefix: software.primandproper
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: K8R2Q5UWQS
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1"
+
+packages:
+  primitives-swift:
+    url: https://github.com/primandproper/primitives-swift
+    from: 0.0.1
+
+targets:
+  Mothball:
+    type: application
+    platform: iOS
+    sources:
+      - Mothball
+    dependencies:
+      - package: primitives-swift
+        product: Observability
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: software.primandproper.mothball
+    info:
+      path: Mothball/Info.plist
+      properties:
+        CFBundleDisplayName: Mothball
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSContactsUsageDescription: >-
+          Mothball archives the contacts you choose to an iCloud Drive folder, removes them from
+          your phone, and restores them when you ask.
+        NSUbiquitousContainers:
+          iCloud.software.primandproper.mothball:
+            NSUbiquitousContainerIsDocumentScopePublic: true
+            NSUbiquitousContainerName: Mothball
+            NSUbiquitousContainerSupportedFolderLevels: Any
+    entitlements:
+      path: Mothball/Mothball.entitlements
+      properties:
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.software.primandproper.mothball
+        com.apple.developer.icloud-services:
+          - CloudDocuments
+        com.apple.developer.ubiquity-container-identifiers:
+          - iCloud.software.primandproper.mothball
+
+  MothballTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - MothballTests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: Mothball
+
+schemes:
+  Mothball:
+    build:
+      targets:
+        Mothball: all
+        MothballTests: [test]
+    test:
+      targets:
+        - MothballTests
