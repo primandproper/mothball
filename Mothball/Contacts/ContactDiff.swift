@@ -3,10 +3,12 @@ import Contacts
 /// Field-by-field comparison of two contacts, rendered as strings so a lossy round trip shows up as
 /// a readable before/after pair in the spike report.
 enum ContactDiff {
-  struct Difference: Equatable, Sendable {
+  struct Difference: Equatable, Sendable, CustomStringConvertible {
     let field: String
     let before: String
     let after: String
+
+    var description: String { "\(field): \(before) -> \(after)" }
   }
 
   /// Every key the spike archives. The note key is deliberately absent: fetching it without the

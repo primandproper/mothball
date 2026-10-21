@@ -65,6 +65,8 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: Mothball
+      - package: primitives-swift
+        product: Observability
 
 schemes:
   Mothball:
