@@ -64,6 +64,9 @@ make build             # simulator build, unsigned
 make spike-sim         # run the archive round-trip diagnostics on a simulator
 ```
 
+The app icon's light, dark and tinted versions are SVGs in `design/icon/`. After editing one, run
+`make app-icon` (needs `brew install librsvg`) to re-render the PNGs in the asset catalog.
+
 `make test` and `make spike-sim` pick the iPhone 17 Pro simulator, falling back to the first
 available iPhone; set `IOS_SIM` to choose a specific one.
 

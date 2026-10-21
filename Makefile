@@ -27,6 +27,11 @@ test: generate
 spike-sim: generate
 	./scripts/spike-sim.sh
 
+# Re-renders the app icon PNGs from design/icon/*.svg after an edit. Needs rsvg-convert.
+.PHONY: app-icon
+app-icon:
+	./scripts/app-icon.sh
+
 .PHONY: clean
 clean:
 	rm -rf Mothball.xcodeproj Mothball/Info.plist Mothball/Mothball.entitlements
