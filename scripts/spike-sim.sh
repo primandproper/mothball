@@ -8,19 +8,13 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$root/scripts/simulator.sh"
 
 bundle_id="software.primandproper.mothball"
-sim="${IOS_SIM:-iPhone 17 Pro}"
 timeout_seconds="${SPIKE_TIMEOUT:-60}"
-
-udid="$(simulator_udid "$sim")"
-if [[ -z "$udid" ]]; then
-  echo "no available simulator named '$sim' (override with IOS_SIM=...)" >&2
-  exit 1
-fi
+udid="$(resolve_simulator)"
 
 derived="$(mktemp -d)"
 trap 'rm -rf "$derived"' EXIT
 
-echo "building for $sim ($udid)"
+echo "building for $udid"
 xcodebuild \
   -project "$root/Mothball.xcodeproj" \
   -scheme Mothball \

@@ -6,16 +6,15 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # shellcheck source=scripts/simulator.sh
 source "$root/scripts/simulator.sh"
 
-sim="${IOS_SIM:-iPhone 17 Pro}"
-udid="$(simulator_udid "$sim")"
-if [[ -z "$udid" ]]; then
-  echo "no available simulator named '$sim' (override with IOS_SIM=...)" >&2
-  exit 1
-fi
+udid="$(resolve_simulator)"
+echo "testing on $(xcrun simctl list devices --json | jq -r --arg udid "$udid" \
+  '.devices[][] | select(.udid == $udid) | .name') ($udid)"
 
+# Signing is off so this runs anywhere, including CI machines with no signing identity.
 xcodebuild \
   -project "$root/Mothball.xcodeproj" \
   -scheme Mothball \
   -destination "id=$udid" \
   -quiet \
+  CODE_SIGNING_ALLOWED=NO \
   test
